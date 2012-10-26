@@ -1,0 +1,6 @@
+
+.fbfriendpicker { position:relative; height:300px; overflow:auto; }
+.fbfp-friend { position:absolute; display:inline-block; padding:10px; margin:3px; width:116px; height:50px; border:1px solid transparent; cursor:pointer; text-decoration:none; color:#000; }
+.fbfp-friend:hover { background:#ECEFF5; }
+.fbfp-friend.selected { background:#d8dfea; border-color:#c3cce1; }
+.fbfp-friend img { background:#c4cde0; float:left; margin-right:7px; width:50px; height:50px; border:0px; }

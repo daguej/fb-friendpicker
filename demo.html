@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Friend Picker</title>
+<link rel="stylesheet" href="style.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="friendpicker.js"></script>
+
+<style>
+#friendfilter  { width:150px; height:15px; background:url(mag16.png) no-repeat 2px 0px; border:1px solid #ccc; padding-left:18px; -webkit-box-shadow: 1px 1px 3px #ccc; -moz-box-shadow: 1px 1px 3px #ccc; box-shadow: 1px 1px 3px #ccc; }
+</style>
+</head>
+<body>
+	<button id="fblogin">Log in to Facebook</button>
+	<input id="friendfilter"> <span id="selcnt"></span>
+	<div id="friends"></div>
+
+	<div id="fb-root"></div>
+	<script>
+	  window.fbAsyncInit = function() {
+	    // init the FB JS SDK
+	    FB.init({
+	      appId      : '359791447448633', // App ID from the App Dashboard
+	      //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File for x-domain communication
+	      status     : true, // check the login status upon init?
+	      cookie     : true, // set sessions cookies to allow your server to access the session?
+	      xfbml      : false  // parse XFBML tags on this page?
+	    });
+
+	    FB.getLoginStatus(function(r) {
+	    	if (r.status == 'connected') initFP();
+	    });
+	    $('#fblogin').click(function() {
+	    	FB.login(function(r) {
+	    		if (r.authResponse) initFP();
+	    	});
+	    });
+	  };
+
+	  function initFP() {
+		$('#fblogin').hide();
+
+		$('#friends').friendpicker({
+			filter: '#friendfilter',
+			counter: '#selcnt',
+			max: 10
+		}).bind('maxselect', function(sel, max) {
+			alert('You can send to up to ' + max + ' friends.');
+			});
+
+		// If the friend picker div can resize, you have to let it know when it has resized
+		$(window).resize(function() {
+			$('#friends').triggerHandler('resize');
+		})
+	  }
+
+	  // Load the SDK's source Asynchronously
+	  (function(d){
+	     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement('script'); js.id = id; js.async = true;
+	     js.src = "//connect.facebook.net/en_US/all.js";
+	     ref.parentNode.insertBefore(js, ref);
+	   }(document));
+	</script>
+
+</body>
+</html>
